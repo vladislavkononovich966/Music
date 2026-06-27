@@ -51,6 +51,15 @@
     z-index: 0;
   }
 
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
   .hero__overlay {
     position: absolute;
     inset: 0;
@@ -61,13 +70,13 @@
       rgba(6,6,8,0.72) 80%,
       rgba(6,6,8,1) 100%
     );
-    z-index: 1;
+    z-index: 2;
   }
 
   .hero__content {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -400,6 +409,7 @@
   <video autoplay loop muted playsinline preload="auto">
     <source src="Экран_1.mp4" type="video/mp4">
   </video>
+  <img class="hero__img" src="Экран 1 копия.jpg" alt="Hero">
   <div class="hero__overlay"></div>
   <div class="hero__content">
     <p class="hero__badge">Music Covers Studio</p>
