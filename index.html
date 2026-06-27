@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Music — Создано для артистов</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060608;
+    --surface: #0e0e12;
+    --pink: #e8006f;
+    --pink-glow: rgba(232,0,111,0.35);
+    --cyan: #00cfff;
+    --text: #f0f0f4;
+    --muted: #888;
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #111116;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(6,6,8,0.18) 0%,
+      rgba(6,6,8,0.10) 40%,
+      rgba(6,6,8,0.72) 80%,
+      rgba(6,6,8,1) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px 48px;
+    text-align: center;
+  }
+
+  .hero__badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+
+  .hero__title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .hero__title span {
+    color: var(--pink);
+  }
+
+  .hero__sub {
+    font-size: 13px;
+    color: rgba(240,240,244,0.65);
+    max-width: 280px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .hero__platforms {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 32px;
+    opacity: 0.55;
+  }
+
+  .hero__platforms span {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .btn-scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+  }
+
+  .btn-scroll:hover, .btn-scroll:active {
+    border-color: var(--pink);
+    box-shadow: 0 0 18px var(--pink-glow);
+  }
+
+  .btn-scroll svg {
+    animation: bounce 1.6s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* ── PACKAGES SECTION ── */
+  .packages {
+    padding: 16px 0 60px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  /* ── PACKAGE CARD ── */
+  .pkg {
+    padding: 28px 20px 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .pkg + .pkg {
+    margin-top: 0;
+  }
+
+  .pkg__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .pkg__name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .pkg__tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: 4px;
+  }
+
+  .tag--popular {
+    background: var(--pink);
+    color: #fff;
+  }
+
+  .tag--top {
+    background: linear-gradient(90deg, #8b00ff, var(--pink));
+    color: #fff;
+  }
+
+  .pkg__desc {
+    font-size: 13px;
+    color: rgba(240,240,244,0.55);
+    margin-bottom: 20px;
+    line-height: 1.65;
+  }
+
+  /* Cover preview */
+  .pkg__preview {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #1a1a22;
+    aspect-ratio: 1/1;
+  }
+
+  .pkg__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pkg__preview-label {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* Features dots */
+  .pkg__features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .pkg__feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(240,240,244,0.75);
+  }
+
+  .pkg__feature::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--pink-glow);
+  }
+
+  .pkg__feature.cyan::before {
+    background: var(--cyan);
+    box-shadow: 0 0 6px rgba(0,207,255,0.4);
+  }
+
+  .pkg__feature.purple::before {
+    background: #a855f7;
+    box-shadow: 0 0 6px rgba(168,85,247,0.4);
+  }
+
+  /* Quantity selector */
+  .pkg__qty {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #1a1a22;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+
+  .qty-btn {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s;
+  }
+
+  .qty-btn:active { background: rgba(255,255,255,0.06); }
+
+  .qty-val {
+    width: 36px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    height: 40px;
+    line-height: 40px;
+  }
+
+  /* CTA buttons */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity .2s, box-shadow .2s;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn--pink {
+    background: var(--pink);
+    color: #fff;
+    box-shadow: 0 4px 24px var(--pink-glow);
+  }
+
+  .btn--pink:hover { opacity: 0.88; box-shadow: 0 6px 32px var(--pink-glow); }
+
+  .btn--gradient {
+    background: linear-gradient(90deg, #8b00ff 0%, var(--pink) 100%);
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(139,0,255,0.3);
+  }
+
+  .btn--gradient:hover { opacity: 0.88; }
+
+  .btn--outline-pink {
+    background: transparent;
+    border: 1.5px solid var(--pink);
+    color: var(--pink);
+  }
+
+  .btn--outline-pink:hover { background: rgba(232,0,111,0.08); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,0,111,0.3), transparent);
+    margin: 0 20px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a { color: var(--pink); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <video autoplay loop muted playsinline preload="auto">
+    <source src="Экран_1.mp4" type="video/mp4">
+  </video>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <p class="hero__badge">Music Covers Studio</p>
+    <h1 class="hero__title">Создано<br>для <span>артистов</span></h1>
+    <p class="hero__sub">Профессиональные обложки для треков, альбомов и синглов — под все платформы</p>
+    <div class="hero__platforms">
+      <span>Spotify</span>
+      <span>Apple Music</span>
+      <span>YouTube</span>
+      <span>Deezer</span>
+    </div>
+    <a href="#packages" class="btn-scroll">
+      Смотреть пакеты
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 2v10M7 12l-4-4M7 12l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- ══ PACKAGES ══ -->
+<section class="packages" id="packages">
+
+  <p class="section-label" style="margin-top:8px;">Выберите пакет</p>
+
+  <!-- ESSENTIAL -->
+  <div class="pkg" id="essential">
+    <div class="pkg__header">
+      <div class="pkg__name">Essential</div>
+    </div>
+    <p class="pkg__desc">Базовый пакет для артистов, которым нужна качественная обложка быстро и без лишнего.</p>
+
+    <div class="pkg__preview" style="aspect-ratio:1/1; background: linear-gradient(135deg,#1a0a10,#2d0d1a);">
+      <!-- placeholder cover image -->
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#e8006f44,#e8006f22);border:1px solid rgba(232,0,111,0.3);display:flex;align-items:center;justify-content:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#e8006f" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="18" r="3" stroke="#e8006f" stroke-width="1.5"/><circle cx="18" cy="16" r="3" stroke="#e8006f" stroke-width="1.5"/></svg>
+        </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;">Пример обложки</p>
+      </div>
+    </div>
+
+    <div class="pkg__features">
+      <div class="pkg__feature">1 вариант обложки</div>
+      <div class="pkg__feature">Адаптация под все платформы</div>
+      <div class="pkg__feature">Срок: 3 рабочих дня</div>
+      <div class="pkg__feature">1 правка включена</div>
+    </div>
+
+    <div class="pkg__qty" id="qty-essential">
+      <button class="qty-btn" onclick="changeQty('essential',-1)">−</button>
+      <div class="qty-val" id="val-essential">1</div>
+      <button class="qty-btn" onclick="changeQty('essential',1)">+</button>
+    </div>
+
+    <a href="#" class="btn-primary btn--outline-pink">Выбрать Essential</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRO -->
+  <div class="pkg" id="pro">
+    <div class="pkg__header">
+      <div class="pkg__name">Pro</div>
+      <span class="pkg__tag tag--popular">Популярный</span>
+    </div>
+    <p class="pkg__desc">Для артистов, которым важна уникальность. Ретушь, атмосфера и индивидуальный подход.</p>
+
+    <div class="pkg__preview" style="background: linear-gradient(135deg,#1a0015,#320020);">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#e8006f66,#e8006f22);border:1px solid rgba(232,0,111,0.5);display:flex;align-items:center;justify-content:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#e8006f" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="18" r="3" stroke="#e8006f" stroke-width="1.5"/><circle cx="18" cy="16" r="3" stroke="#e8006f" stroke-width="1.5"/></svg>
+        </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;">Пример обложки</p>
+      </div>
+    </div>
+
+    <div class="pkg__features">
+      <div class="pkg__feature cyan">2 варианта обложки</div>
+      <div class="pkg__feature cyan">Профессиональная ретушь фото</div>
+      <div class="pkg__feature cyan">Адаптация под все платформы</div>
+      <div class="pkg__feature cyan">Срок: 2 рабочих дня</div>
+      <div class="pkg__feature cyan">2 правки включены</div>
+    </div>
+
+    <div class="pkg__qty" id="qty-pro">
+      <button class="qty-btn" onclick="changeQty('pro',-1)">−</button>
+      <div class="qty-val" id="val-pro">1</div>
+      <button class="qty-btn" onclick="changeQty('pro',1)">+</button>
+    </div>
+
+    <a href="#" class="btn-primary btn--pink">Выбрать Pro</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SIGNATURE -->
+  <div class="pkg" id="signature">
+    <div class="pkg__header">
+      <div class="pkg__name">Signature</div>
+      <span class="pkg__tag tag--top">Топ</span>
+    </div>
+    <p class="pkg__desc">Максимальный уровень. Полная творческая концепция, уникальный стиль и приоритет в работе.</p>
+
+    <div class="pkg__preview" style="background: linear-gradient(135deg,#0d001a,#1e0030);">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#a855f766,#e8006f33);border:1px solid rgba(168,85,247,0.5);display:flex;align-items:center;justify-content:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="18" r="3" stroke="#a855f7" stroke-width="1.5"/><circle cx="18" cy="16" r="3" stroke="#a855f7" stroke-width="1.5"/></svg>
+        </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;">Пример обложки</p>
+      </div>
+    </div>
+
+    <div class="pkg__features">
+      <div class="pkg__feature purple">3 уникальных концепции</div>
+      <div class="pkg__feature purple">Полная ретушь и цветокоррекция</div>
+      <div class="pkg__feature purple">Анимированная версия обложки</div>
+      <div class="pkg__feature purple">Срок: 1 рабочий день</div>
+      <div class="pkg__feature purple">Безлимитные правки</div>
+      <div class="pkg__feature purple">Приоритетная поддержка</div>
+    </div>
+
+    <div class="pkg__qty" id="qty-signature">
+      <button class="qty-btn" onclick="changeQty('signature',-1)">−</button>
+      <div class="qty-val" id="val-signature">1</div>
+      <button class="qty-btn" onclick="changeQty('signature',1)">+</button>
+    </div>
+
+    <a href="#" class="btn-primary btn--gradient">Выбрать Signature</a>
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2026 Music Covers Studio</p>
+  <p style="margin-top:6px;">Вопросы? <a href="#">Написать нам</a></p>
+</footer>
+
+<script>
+  const qty = { essential: 1, pro: 1, signature: 1 };
+  function changeQty(pkg, delta) {
+    qty[pkg] = Math.max(1, qty[pkg] + delta);
+    document.getElementById('val-' + pkg).textContent = qty[pkg];
+  }
+</script>
+
+</body>
+</html>
